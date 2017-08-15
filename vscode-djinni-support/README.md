@@ -1,10 +1,13 @@
-# djinni-highlight
+# vscode djinni support
+
+![](img/001.png)
+
+![](img/002.png)
+
 ## Install
 ```
 make install
 ```
-
-## Features
 
 ## Release Notes
 

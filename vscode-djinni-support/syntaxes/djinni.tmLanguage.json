@@ -2,10 +2,17 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"scopeName": "source.djinni",
 	"patterns": [
-		{ "include": "#keywords" },
-		{ "include": "#strings" },
-		{ "include": "#record" },
-		{ "include": "#interface" }
+		{"include": "#interface"},
+		{"include": "#record"},
+		{"include": "#generic-two-type"},
+		{"include": "#generic-one-type"},
+		{"include": "#static-function"},
+		{"include": "#post-type"},
+		{"include": "#keywords"},
+		{"include": "#strings"},
+		{"include": "#func-return-type-with-generic-two-type"},
+		{"include": "#func-return-type-with-generic-one-type"},
+		{"include": "#func-return-type"}
 	],
 	"repository": {
 		"keywords": {
@@ -48,6 +55,7 @@
 			"end": "\\}",
 			"patterns": [
 				{"include": "$self"},
+				{"include": "#post-type"},
 				{"include": "#strings"},
 				{"include": "#keywords"}
 			]
@@ -61,9 +69,10 @@
 			"end": "\\}",
 			"patterns": [
 				{"include": "$self"},
-				{"include": "#strings"},
 				{"include": "#function"},
+				{"include": "#post-type"},
 				{"include": "#static-function"},
+				{"include": "#strings"},
 				{"include": "#keywords"}
 			]
 		},
@@ -78,21 +87,24 @@
 				{"include": "#strings"},
 				{"include": "#keywords"},
 				{"include": "#post-type"},
-				{"include": "#return-type"}
+				{"include": "#func-return-type-with-generic-two-type"},
+				{"include": "#func-return-type-with-generic-one-type"},
+				{"include": "#func-return-type"}
 			]
 		},
 		"static-function": {
 			"begin": "(static)(\\s+)([A-Za-z][A-Za-z0-9_.]*)(\\()",
 			"beginCaptures": {
+				"1": {"name": "keyword.djinni"},
 				"3": {"name": "entity.name.function.djinni"}
 			},
 			"end": ";",
 			"patterns": [
 				{"include": "$self"},
-				{"include": "#strings"},
-				{"include": "#keywords"},
 				{"include": "#post-type"},
-				{"include": "#return-type"}
+				{"include": "#func-return-type"},
+				{"include": "#strings"},
+				{"include": "#keywords"}
 			]
 		},
 		"post-type": {
@@ -107,16 +119,53 @@
 				{"include": "#keywords"}
 			]
 		},
-		"return-type": {
+		"generic-one-type": {
+			"begin": "<(\\s*)([A-Za-z][A-Za-z0-9_.]*)(\\s*)",
+			"beginCaptures": {
+				"2": {"name": "storage.type.djinni"}
+			},
+			"end": ">",
+			"patterns": [
+			]
+		},
+		"generic-two-type": {
+			"begin": "<(\\s*)([A-Za-z][A-Za-z0-9_.]*)(\\s*),(\\s*)([A-Za-z][A-Za-z0-9_.]*)(\\s*)",
+			"beginCaptures": {
+				"2": {"name": "storage.type.djinni"},
+				"5": {"name": "storage.type.djinni"}
+			},
+			"end": ">",
+			"patterns": [
+			]
+		},
+		"func-return-type": {
 			"begin": "(\\))(\\s*):(\\s*)([A-Za-z][A-Za-z0-9_.]*)",
 			"beginCaptures": {
-				"4": {"name": "keyword.djinni"}
+				"4": {"name": "entity.name.type.djinni"}
 			},
 			"end": ";",
 			"patterns": [
-				{"include": "$self"},
-				{"include": "#strings"},
-				{"include": "#keywords"}
+			]
+		},
+		"func-return-type-with-generic-one-type": {
+			"begin": "(\\))(\\s*):(\\s*)([A-Za-z][A-Za-z0-9_.]*)(\\s*)<(\\s*)([A-Za-z][A-Za-z0-9_.]*)(\\s*)",
+			"beginCaptures": {
+				"4": {"name": "entity.name.type.djinni"},
+				"7": {"name": "storage.type.djinni"}
+			},
+			"end": ">",
+			"patterns": [
+			]
+		},
+		"func-return-type-with-generic-two-type": {
+			"begin": "(\\))(\\s*):(\\s*)([A-Za-z][A-Za-z0-9_.]*)(\\s*)<(\\s*)([A-Za-z][A-Za-z0-9_.]*)(\\s*),(\\s*)([A-Za-z][A-Za-z0-9_.]*)(\\s*)",
+			"beginCaptures": {
+				"4": {"name": "entity.name.type.djinni"},
+				"7": {"name": "storage.type.djinni"},
+				"10": {"name": "storage.type.djinni"}
+			},
+			"end": ">",
+			"patterns": [
 			]
 		}
 
