@@ -1,0 +1,26 @@
+{
+    "name": "djinni-highlight",
+    "displayName": "djinni-highlight",
+    "description": "",
+    "version": "0.0.1",
+    "publisher": "letiantian",
+    "engines": {
+        "vscode": "^1.15.0"
+    },
+    "categories": [
+        "Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "djinni",
+            "aliases": ["djinni", "djinni"],
+            "extensions": [".djinni"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "djinni",
+            "scopeName": "source.djinni",
+            "path": "./syntaxes/djinni.tmLanguage.json"
+        }]
+    }
+}

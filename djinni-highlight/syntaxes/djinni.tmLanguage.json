@@ -1,0 +1,49 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.djinni",
+					"match": "\\b(enum|string|bool|i8|i16|i32|i64|f32|f64|binary|set|map|list|const|deriving|static|optional)\\b"
+				},
+				{
+					"name": "keyword.control.djinni",
+					"match": "(:|\\+c|\\+j|\\+o|@import)"
+				},
+				{
+					"name": "markup.bold.djinni",
+					"match": "\\b(record|interface)\\b"
+				},
+				{
+					"name": "markup.italic.djinni",
+      				"match": "\\b(\\+c|\\\\+J|\\\\+o)\\b"
+				},
+				{
+					"name": "comment.line.djinni",
+					"match": "#.*$\n?"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.djinni",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.djinni",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.djinni"
+}
