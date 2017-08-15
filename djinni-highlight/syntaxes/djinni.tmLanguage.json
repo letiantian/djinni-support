@@ -1,12 +1,11 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"scopeName": "source.djinni",
 	"patterns": [
-		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
-		}
+		{ "include": "#keywords" },
+		{ "include": "#strings" },
+		{ "include": "#record" },
+		{ "include": "#interface" }
 	],
 	"repository": {
 		"keywords": {
@@ -24,10 +23,6 @@
 					"match": "\\b(record|interface)\\b"
 				},
 				{
-					"name": "markup.italic.djinni",
-      				"match": "\\b(\\+c|\\\\+J|\\\\+o)\\b"
-				},
-				{
 					"name": "comment.line.djinni",
 					"match": "#.*$\n?"
 				}
@@ -43,7 +38,87 @@
 					"match": "\\\\."
 				}
 			]
+		},
+		"record": {
+			"begin": "([A-Za-z][A-Za-z0-9_.]*)(\\s*)=(\\s*)(record|enum)(\\s*)(\\{)?",
+			"beginCaptures": {
+				"1": {"name": "entity.name.class.message.djinni"},
+				"4": {"name": "markup.bold.djinni"}
+			},
+			"end": "\\}",
+			"patterns": [
+				{"include": "$self"},
+				{"include": "#strings"},
+				{"include": "#keywords"}
+			]
+		},
+		"interface": {
+			"begin": "([A-Za-z][A-Za-z0-9_.]*)(\\s*)=(\\s*)(interface)",
+			"beginCaptures": {
+				"1": {"name": "entity.name.class.djinni"},
+				"4": {"name": "markup.bold.djinni"}
+			},
+			"end": "\\}",
+			"patterns": [
+				{"include": "$self"},
+				{"include": "#strings"},
+				{"include": "#function"},
+				{"include": "#static-function"},
+				{"include": "#keywords"}
+			]
+		},
+		"function": {
+			"begin": "([A-Za-z][A-Za-z0-9_.]*)(\\()",
+			"beginCaptures": {
+				"1": {"name": "entity.name.function.djinni"}
+			},
+			"end": ";",
+			"patterns": [
+				{"include": "$self"},
+				{"include": "#strings"},
+				{"include": "#keywords"},
+				{"include": "#post-type"},
+				{"include": "#return-type"}
+			]
+		},
+		"static-function": {
+			"begin": "(static)(\\s+)([A-Za-z][A-Za-z0-9_.]*)(\\()",
+			"beginCaptures": {
+				"3": {"name": "entity.name.function.djinni"}
+			},
+			"end": ";",
+			"patterns": [
+				{"include": "$self"},
+				{"include": "#strings"},
+				{"include": "#keywords"},
+				{"include": "#post-type"},
+				{"include": "#return-type"}
+			]
+		},
+		"post-type": {
+			"begin": "([A-Za-z][A-Za-z0-9_.]*)(\\s*):(\\s*)([A-Za-z][A-Za-z0-9_.]*)",
+			"beginCaptures": {
+				"4": {"name": "keyword.djinni"}
+			},
+			"end": "\\b",
+			"patterns": [
+				{"include": "$self"},
+				{"include": "#strings"},
+				{"include": "#keywords"}
+			]
+		},
+		"return-type": {
+			"begin": "(\\))(\\s*):(\\s*)([A-Za-z][A-Za-z0-9_.]*)",
+			"beginCaptures": {
+				"4": {"name": "keyword.djinni"}
+			},
+			"end": ";",
+			"patterns": [
+				{"include": "$self"},
+				{"include": "#strings"},
+				{"include": "#keywords"}
+			]
 		}
-	},
-	"scopeName": "source.djinni"
+
+	}
 }

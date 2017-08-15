@@ -1,0 +1,1 @@
+Editors support for [Djinni IDL](https://github.com/dropbox/djinni).
